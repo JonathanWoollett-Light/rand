@@ -302,6 +302,19 @@ where
     }
 }
 
+impl<T> Distribution<Option<T>> for StandardUniform
+where StandardUniform: Distribution<T>
+{
+    #[inline]
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Option<T> {
+        if rng.random::<bool>() {
+            Some(rng.random())
+        } else {
+            None
+        }
+    }
+}
+
 impl<T> Distribution<Wrapping<T>> for StandardUniform
 where
     StandardUniform: Distribution<T>,
